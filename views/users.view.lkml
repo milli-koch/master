@@ -193,6 +193,10 @@ view: users {
   measure: count {
     type: count
     drill_fields: [detail*]
+    filters: {
+      field: first_name
+      value: "milli"
+    }
   }
 
   measure: total_users {
