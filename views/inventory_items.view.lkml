@@ -12,6 +12,17 @@ view: inventory_items {
     sql: ${TABLE}.cost ;;
   }
 
+  measure: total_cost {
+    type: sum
+    sql: ${cost} ;;
+    value_format_name: usd_0
+  }
+
+  measure: percent_of_total_cost {
+    type: percent_of_total
+    sql: ${total_cost} ;;
+  }
+
   dimension: dummy2 {
     type: string
     sql: ${cost} ;;
