@@ -5,14 +5,14 @@ include: "/other/products.explore.lkml"
 include: "/views/order_facts/*.view"
 # include: "/manifest.lkml"
 
-test: test_there_are_users {
-  explore_source: users {
-    column: count {}
-  }
-  assert: there_is_data {
-    expression: ${users.count} > 0 ;;
-  }
-}
+# test: test_there_are_users {
+#   explore_source: users {
+#     column: count {}
+#   }
+#   assert: there_is_data {
+#     expression: ${users.count} > 0 ;;
+#   }
+# }
 
 datagroup: the_look_default_datagroup {
   sql_trigger:  SELECT MAX(id) FROM orders;;
