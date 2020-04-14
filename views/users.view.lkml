@@ -63,14 +63,29 @@ view: users {
   dimension: name {
     type: string
     sql: concat(${first_name}, " ", ${last_name}) ;;
-    link: {
-      label: "User Dashboard"
-      url: "https://localhost:9999/dashboards/4?User={{ value }}&Date={{ _filters['users.created_date'] }}&Gender={{ users.gender | url_encode }}"
-    }
-    link: {
-      label: "Drill"
-      url: "https://localhost:9999/explore/the_look/orders?fields=users.name,users.city,users.state,users.zip&f[users.created_date]={{ _filters['users.created_date'] }}&f[users.name]={{ value }}&f[users.gender]={{ users.gender }}"
-    }
+    html:
+    <table  style="background-color:#E7E6E6;width:100%;height:105px;" >
+    <tr  style="width auto;height : auto;">
+
+    <td >
+    <a  href="target="new" https://localhost:9999/dashboards/4" >
+    <button  style="box-shadow: inset 2px 25px 12px rgba(251,251,251,.5), 0 3px 3px rgba(0,0,0,.7),0 3px 15px rgba(0,0,0,.1); border-radius: 4px;background-color:#9CC8E1;
+    font-family: Bodoni MT,Didot,Didot LT STD,Hoefler Text,Garamond,Times New Roman,serif;font-style:bold;text-align:center;width:auto;height:auto;
+    border: 2px white;border-style: outset;font-size:250%;display: block;margin:auto;justify-content: center">&nbsp;All-In Home&nbsp;</button>
+    </a>
+    </td>
+    <td >
+
+    ;;
+
+#     link: {
+#       label: "User Dashboard"
+#       url: "https://localhost:9999/dashboards/4?User={{ value }}&Date={{ _filters['users.created_date'] }}&Gender={{ users.gender | url_encode }}"
+#     }
+#     link: {
+#       label: "Drill"
+#       url: "https://localhost:9999/explore/the_look/orders?fields=users.name,users.city,users.state,users.zip&f[users.created_date]={{ _filters['users.created_date'] }}&f[users.name]={{ value }}&f[users.gender]={{ users.gender }}"
+#     }
 
   }
 
@@ -83,7 +98,7 @@ view: users {
   dimension: age_tier {
     type: tier
     tiers: [0, 10, 20, 30, 40, 50, 60, 70, 80]
-    style: classic
+    style: interval
     sql: ${age} ;;
   }
 
@@ -97,8 +112,7 @@ view: users {
 
   dimension: age {
     type: number
-    sql: (${TABLE}.age)*10 ;;
-    value_format: "[>=1000000000]0,,,\" B\"; [>=1000000]0,,\" M\";[>=1000]0,\" K\";[>=1000000000]0;0"
+    sql: ${TABLE}.age ;;
   }
 
   measure: total_age {
@@ -153,8 +167,10 @@ view: users {
     # required_access_grants: [user_fields]
     type: string
     sql: ${TABLE}.first_name ;;
-    html: <b><center>{{value}}</center></b> ;;
-  }
+    link: {
+      url: "https://master.dev.looker.com/dashboards/1883?User ID={{users.id._value}}"
+    }
+    }
 
   dimension: gender {
     type: string
@@ -214,9 +230,11 @@ view: users {
     }
   }
 
-  measure: users_per_day {
+  measure: orders_per_user {
+    label: "AUO"
+    description: "somehing"
     type: number
-    sql: ${total_users}/${total_days} ;;
+    sql: ${count}/${orders.count} ;;
   }
 
   set: detail {

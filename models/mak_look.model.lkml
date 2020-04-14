@@ -51,7 +51,7 @@ explore: sme_lookml {
 
 explore: order_facts_dynamic {}
 
-explore: users {}
+# explore: users {}
 
 explore: products {
   extends: [products_base]

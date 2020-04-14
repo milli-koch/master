@@ -34,12 +34,6 @@ dimension: var {
   dimension: category {
     type: string
     sql: ${TABLE}.category ;;
-    html: {% assign var = category_param._parameter_value  | replace: "&#39;", "" %}
-    {% if value == var %}
-    <font color="darkgreen">{{ rendered_value }}</font>
-    {% else %}
-    <font color="darkred">{{ rendered_value }}</font>
-    {% endif %} ;;
     }
 
   dimension: encoded_category {

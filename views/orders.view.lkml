@@ -15,6 +15,10 @@ view: orders {
     {% endif %};;
   }
 
+  dimension: blanky {
+    sql: case when ${status} = "complete" then ${status} else '' end ;;
+  }
+
   dimension: id_filter {
     type: yesno
     sql: ${id} in (1,2,3,4) ;;
@@ -123,17 +127,17 @@ view: orders {
 #         }
 ##        url:"/dashboards/306?Customer_ID={{ _filters['Customer.Customer_id_filter'] | url_encode }}"  }
 ##    html: <font size="10" color="#000000">{{rendered_value}} ;;
-    html:
-      {% if _user_attributes['sw_embed_domain'] | size > 0 %}
-        <a href="/embed/dashboards/306?Customer={{ _filters['Customer.Customer_id_filter'] | url_encode }}
-        {% if _user_attributes['sw_embed_domain'] | size > 0 %}&embed_domain={{ _user_attributes['sw_embed_domain'] }}
-        {% endif %}" target="_blank">Drill to State</a>
-      {% else%}
-        <a href="/dashboards/306?Customer={{ _filters['Customer.Customer_id_filter'] | url_encode }}
-        {% if _user_attributes['sw_embed_domain'] | size > 0 %}&embed_domain={{ _user_attributes['sw_embed_domain'] }}
-        {% endif %}" target="_blank">Drill to State</a>
-      {% endif %}
-      ;;
+#     html:
+#       {% if _user_attributes['sw_embed_domain'] | size > 0 %}
+#         <a href="/embed/dashboards/306?Customer={{ _filters['Customer.Customer_id_filter'] | url_encode }}
+#         {% if _user_attributes['sw_embed_domain'] | size > 0 %}&embed_domain={{ _user_attributes['sw_embed_domain'] }}
+#         {% endif %}" target="_blank">Drill to State</a>
+#       {% else%}
+#         <a href="/dashboards/306?Customer={{ _filters['Customer.Customer_id_filter'] | url_encode }}
+#         {% if _user_attributes['sw_embed_domain'] | size > 0 %}&embed_domain={{ _user_attributes['sw_embed_domain'] }}
+#         {% endif %}" target="_blank">Drill to State</a>
+#       {% endif %}
+#       ;;
   }
 
   dimension: date_is_mtd {
@@ -146,7 +150,7 @@ view: orders {
   dimension: date {
     type: date
     sql: dateadd(day, -1, {% parameter mtd %}) ;;
-    required_access_grants: [user_fields]
+#     required_access_grants: [user_fields]
   }
 
   parameter: date_value {
@@ -504,6 +508,11 @@ measure: count {
 #   }
 }
 
+measure: string_count {
+  type: string
+  sql: concat(${count}, " Orders") ;;
+}
+
 measure: running_total {
   type: running_total
   sql: ${count}*100;;
@@ -570,7 +579,32 @@ measure: running_total {
   dimension: cancelled {
     type: yesno
     sql: ${status} = "cancelled" ;;
+#     html: {{rendered_value}} ;;
   }
+
+  dimension: OrderNavigation {
+    html:
+    <table  style="background-color:#E7E6E6;width:100%;height:150px;" >
+    <tr  style="width auto;height : auto;">
+    <td > </td>
+    <td > </td>
+    <td > </td>
+    <td > </td>
+    <td > </td>
+    <td > </td>
+    <td > </td>
+    <td > </td>
+    <td > </td>
+    <td > </td>
+    <td >
+    <a target="new" href="/dashboards/1883" >
+    <button  style="box-shadow: inset 2px 25px 12px rgba(251,251,251,.5), 0 3px 3px rgba(0,0,0,.7),0 3px 15px rgba(0,0,0,.1); border-radius: 4px;background-color:#9CC8E1;
+    font-family: Bodoni MT,Didot,Didot LT STD,Hoefler Text,Garamond,Times New Roman,serif;font-style:bold;text-align:center;width:auto;height:auto;
+    border: 2px white;border-style: outset;padding-left:60px;padding-right:60px;display: inline-block;">&nbsp;All-In Home&nbsp;</button>
+    </a>
+    </td>
+    <td >;;
+    }
 
 
 

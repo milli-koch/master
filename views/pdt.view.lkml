@@ -2,8 +2,8 @@ view: pdt {
 derived_table: {
   sql: SELECT {% parameter filter_name %} as select_field
   FROM demo_db.orders;;
-  datagroup_trigger: the_look_default_datagroup
-  indexes: ["select_field"]
+#   datagroup_trigger: the_look_default_datagroup
+#   indexes: ["select_field"]
   }
 
 
