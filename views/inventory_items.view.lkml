@@ -8,8 +8,19 @@ view: inventory_items {
   }
 
   dimension: cost {
-    type: string
+    type: number
     sql: ${TABLE}.cost ;;
+  }
+
+  measure: total_cost {
+    type: sum
+    sql: ${cost} ;;
+    value_format_name: usd_0
+  }
+
+  measure: percent_of_total_cost {
+    type: percent_of_total
+    sql: ${total_cost} ;;
   }
 
   dimension: dummy2 {
@@ -22,7 +33,6 @@ view: inventory_items {
     timeframes: [
       raw,
       time,
-      date,
       week,
       month,
       year
@@ -30,9 +40,14 @@ view: inventory_items {
     sql: ${TABLE}.created_at ;;
   }
 
+  dimension: created_date {
+    type: date
+    sql: ${TABLE}.created_at ;;
+  }
+
   dimension: product_id {
     type: number
-    hidden: yes
+#     hidden: yes
     sql: ${TABLE}.product_id ;;
   }
 
@@ -56,7 +71,7 @@ view: inventory_items {
   }
 
   measure: testing {
-    type: number
-    sql: case when ${products.count} = 1 then 'true' else 'false' end ;;
+    type: sum
+    sql: case when ${product_id} < 10 then 'yes' else null end ;;
   }
 }
