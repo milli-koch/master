@@ -16,7 +16,7 @@ view: orders {
   }
 
   dimension: blanky {
-    sql: case when ${status} = "complete" then ${status} else '' end ;;
+    sql: case when ${status} = "complete" then ${status} else null end ;;
   }
 
   dimension: id_filter {
